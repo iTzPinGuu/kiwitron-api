@@ -7,7 +7,7 @@ from tkinter import messagebox
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # Credenziali (Inserisci direttamente le tue credenziali qui)
-USERNAME = "info@truccoloangelo.com"
+USERNAME = "xxxxxxx"
 PASSWORD = "xxxxxx"
 ASSET_ID = 2622
 
