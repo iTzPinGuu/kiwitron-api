@@ -1,11 +1,16 @@
 import requests
+import urllib3
 import tkinter as tk
 from tkinter import messagebox
 
+# Silenzia il warning SSL
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
 # Credenziali (Inserisci direttamente le tue credenziali qui)
-USERNAME = "xxxxx"
+USERNAME = "info@truccoloangelo.com"
 PASSWORD = "xxxxxx"
 ASSET_ID = 2622
+
 
 # Funzione per effettuare il login e ottenere il token di sessione
 def login(session):
@@ -37,6 +42,7 @@ def login(session):
         messagebox.showerror("Eccezione", f"Eccezione durante il login: {e}")
         return False
 
+
 # Funzione per inviare un messaggio
 def invia_messaggio(session, frase):
     url_hmi = "https://my.kiwitron.tech/api_v2/hmi"
@@ -62,6 +68,7 @@ def invia_messaggio(session, frase):
         messagebox.showerror("Eccezione", f"Eccezione durante l'invio del messaggio: {e}")
         return False
 
+
 # Funzione per gestire l'invio del messaggio dalla GUI
 def invia_da_gui():
     frase = entry.get()
@@ -72,6 +79,7 @@ def invia_da_gui():
         invia_messaggio(session, frase)
     else:
         messagebox.showwarning("Attenzione", "Inserisci un messaggio prima di inviare.")
+
 
 # Configurazione della GUI
 root = tk.Tk()
@@ -89,7 +97,8 @@ entry.pack(pady=5)
 button_invia = tk.Button(frame, text="Invia", command=invia_da_gui)
 button_invia.pack(pady=5)
 
-# Crea una sessione persistente
+# Crea una sessione persistente con verifica SSL disabilitata
 session = requests.Session()
+session.verify = False  # ← disabilita verifica SSL (certificato non valido lato server)
 
 root.mainloop()
