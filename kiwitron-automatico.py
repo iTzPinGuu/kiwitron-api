@@ -5,8 +5,7 @@ import time
 from datetime import datetime
 import pytz
 
-# Silenzia il warning SSL
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
 
 # Costanti per la configurazione manuale
 INIZIO_PAUSA_PRANZO = "12:30"
@@ -14,8 +13,8 @@ FINE_PAUSA_PRANZO = "13:36"
 CHIUSURA_GIORNATA = "17:50"
 
 # Credenziali
-USERNAME = "xxxxxxx"
-PASSWORD = "xxxxxxxxx"
+USERNAME = "XXXX"
+PASSWORD = "XXXX"
 ASSET_ID = 2622
 AREAS = ['15', '16', '17', '18', '19', '10b', '3a', '4', '5']
 
@@ -31,7 +30,7 @@ def genera_frase(numero):
 
 # Funzione per effettuare il login e ottenere il token di sessione
 def login(session):
-    url_login = "https://my.kiwitron.tech/api_v1/login"
+    url_login = "https://api.my.kiwisat.it/api_v1/login"
     headers_login = {
         "Accept": "*/*",
         "Content-Type": "application/json"
@@ -63,7 +62,7 @@ def login(session):
 
 # Funzione per inviare un messaggio con gestione degli errori
 def invia_messaggio(session, frase, max_retry=3):
-    url_hmi = "https://my.kiwitron.tech/api_v2/hmi"
+    url_hmi = "https://api.my.kiwisat.it/api_v2/hmi"
     headers_hmi = {
         "Accept": "*/*",
         "Content-Type": "application/json",
@@ -115,7 +114,7 @@ def è_ora_di_terminare():
 def main():
     # Crea una sessione persistente con verifica SSL disabilitata
     session = requests.Session()
-    session.verify = False  # ← disabilita verifica SSL (certificato non valido lato server)
+    session.verify = True  # ← disabilita verifica SSL (certificato non valido lato server)
 
     if not login(session):
         print("Impossibile effettuare il login. Terminazione dello script.")
